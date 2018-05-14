@@ -19,13 +19,20 @@
 	<string.h>
 	<ctype.h>
 
-1525565701 source:d:\documentos varios\github\labclas1\tomas\tps\main.c
+1526091834 source:d:\documentos varios\github\labclas1\tomas\tps\main.c
 	<stdio.h>
 	<stdlib.h>
 	"funciones.h"
 	"string.h"
 
-1525568644 d:\documentos varios\github\labclas1\tomas\tps\funciones.h
+1526087381 d:\documentos varios\github\labclas1\tomas\tps\funciones.h
 	<string.h>
 	<ctype.h>
+
+1526007010 source:d:\documentos varios\github\labclas1\tomas\tps\tp_2_cascara\funciones.c
+
+1526091442 source:d:\documentos varios\github\labclas1\tomas\tps\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	"funciones.h"
 
