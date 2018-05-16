@@ -6,15 +6,15 @@
 #include "utn.h"
 #include "funciones.h"
 
-/** \brief
- * \param array Cliente*
- * \param limite int
- * \return int
+/** \brief INICIALIZO ARRAY CLIENTE (.ISEMPTY =1)
+ * \param array Cliente* ARRAY CLIENTE A TRABAJAR
+ * \param limite int LIMITE DE ARRAY CLIENTE
+ * \return int RETORNO [0] SI SE INICIALIZA CON EXITO [1] ERROR!!!
  *
  */
 int cliente_init(Cliente* array,int limite)
 {
-    int retorno = -1;
+    int retorno = 1;
     int i;
     if(limite > 0 && array != NULL)
     {
@@ -27,38 +27,16 @@ int cliente_init(Cliente* array,int limite)
     return retorno;
 }
 
-int cliente_mostrarDebug(Cliente* array,int limite)
-{
-    int retorno = -1;
-    int i;
-    if(limite > 0 && array != NULL)
-    {
-        retorno = 0;
-        for(i=0;i<limite;i++)
-        {
-            printf("[DEBUG] - %d - %s - %d\n",array[i].idCliente, array[i].nombre, array[i].isEmpty);
-        }
-    }
-    return retorno;
-}
-
-int cliente_mostrar(Cliente* array,int limite)
-{
-    int retorno = -1;
-    int i;
-    if(limite > 0 && array != NULL)
-    {
-        retorno = 0;
-        for(i=0;i<limite;i++)
-        {
-            if(!array[i].isEmpty)
-                printf("[RELEASE] - %d - %s - %d\n",array[i].idCliente, array[i].nombre, array[i].isEmpty);
-        }
-    }
-    return retorno;
-}
-
-
+/** \brief ALTA FORAZADA (TESTEAR)
+ *
+ * \param array Cliente*
+ * \param nombre char*
+ * \param apellido char*
+ * \param cuit char*
+ * \param limite int
+ * \return int
+ *
+ */
 int cliente_altaForzada(Cliente* array,char* nombre, char* apellido, char* cuit,int limite)
 {
     int retorno = -1;
@@ -81,9 +59,16 @@ int cliente_altaForzada(Cliente* array,char* nombre, char* apellido, char* cuit,
     return retorno;
 }
 
+/** \brief ALTA CLIENTE (CARGA NUEVO CLIENTE)
+ *
+ * \param array Cliente* ARRAY CLIENTE A TRABAJAR
+ * \param limite int LIMITE ARRAY CLIENTE
+ * \return int RETORNA [0] SI SE PRODUCE EL ALTA // [1] ERROR!!
+ *
+ */
 int cliente_alta(Cliente* array,int limite)
 {
-    int retorno = -1;
+    int retorno = 1;
     int i;
     char nombre[50],apellido[50],cuit[50];
     if(limite > 0 && array != NULL)
@@ -91,11 +76,11 @@ int cliente_alta(Cliente* array,int limite)
         i = buscarLugarLibreCliente(array,limite);
         if(i >= 0)
         {
-            if(!getArrayChar(nombre,"\nIngrese Nombre: ","ERROR, NOMBRE NO CONTIENE NUMEROS: "))
+            if(!getArrayChar(nombre,"\nIngrese Nombre: ","ERROR, NOMBRE NO CONTIENE NUMEROS: ",50))
             {
-                if(!getArrayChar(apellido,"\nIngrese Apellido: ","ERROR, APELLIDO NO CONTIENE NUMEROS: "))
+                if(!getArrayChar(apellido,"\nIngrese Apellido: ","ERROR, APELLIDO NO CONTIENE NUMEROS: ",50))
                 {
-                    if(!getCharNumeros(cuit, "Ingrese cuit: ","ERROR, EL CUIT NO CONTIENE LETRAS: "))
+                    if(!getCharNumeros(cuit, "Ingrese cuit: ","ERROR, EL CUIT NO CONTIENE LETRAS: ",50))
                     {
                         retorno = 0;
                         strcpy(array[i].nombre,nombre);
@@ -106,70 +91,61 @@ int cliente_alta(Cliente* array,int limite)
                     }
                 }
             }
-            else
-            {
-                retorno = -3;
-            }
         }
-        else
-        {
-            retorno = -2;
-        }
-
     }
     return retorno;
 }
 
-
+/** \brief BAJA CLIENTE (ID = ID CLIENTE -> BAJA)
+ *
+ * \param array Cliente* ARRAY CLIENTE (A TRABAJAR)
+ * \param limiteC int LIMITE ARRAY DE CLIENTE
+ * \param id int ID CLIENTE A COMPARAR
+ * \return int RETORNA [0] SI SE REALIZA LA BAJA // [1] ERROR!!
+ *
+ */
 int cliente_baja(Cliente* array, int limiteC, int id)
 {
-    int retorno = -1;
+    int retorno = 1;
     int i;
-    char borrar;
     if(limiteC > 0 && array != NULL)
     {
-        retorno = -2;
         for(i=0;i<limiteC;i++)
         {
             if(!array[i].isEmpty && array[i].idCliente==id)
             {
-                    printf("\nDESEA BORRAR? S/N: ");
-                    borrar = getchar();
-                    if('s'==borrar)
-                    {
                         array[i].isEmpty = 1;
                         retorno = 0;
-                        break;
-                    }
             }
         }
-
-
-
     }
     return retorno;
 }
 
-
-
-
+/** \brief MODIFICA DATOS DE CLIENTE (NOMBRE, APELLIDO, CUIT)
+ *
+ * \param array Cliente* ARRAY CLIENTE
+ * \param limite int LIMITE DE ARRAY CLIENTE
+ * \param id int ID USUARIO A COMPARAR
+ * \return int RETORNA [0] SI SE REALIZA MODIFICACION CON EXITO [1] ERROR!!
+ *
+ */
 int cliente_modificacion(Cliente* array,int limite, int id)
 {
-    int retorno = -1;
+    int retorno = 1;
     int i;
     char nombre[50],apellido[50],cuit[50];
     if(limite > 0 && array != NULL)
     {
-        retorno = -2;
         for(i=0;i<limite;i++)
         {
             if(!array[i].isEmpty && array[i].idCliente==id)
             {
-                if(!getArrayChar(nombre,"\nIngrese Nombre: ","ERROR, NOMBRE NO CONTIENE NUMEROS: "))
+                if(!getArrayChar(nombre,"\nIngrese Nombre: ","ERROR, NOMBRE NO CONTIENE NUMEROS: ",50))
                 {
-                    if(!getArrayChar(apellido,"\nIngrese Apellido: ","ERROR, APELLIDO NO CONTIENE NUMEROS: "))
+                    if(!getArrayChar(apellido,"\nIngrese Apellido: ","ERROR, APELLIDO NO CONTIENE NUMEROS: ",50))
                     {
-                        if(!getCharNumeros(cuit, "Ingrese cuit: ","ERROR, EL CUIT NO CONTIENE LETRAS: "))
+                        if(!getCharNumeros(cuit, "Ingrese cuit: ","ERROR, EL CUIT NO CONTIENE LETRAS: ",50))
                         {
                             retorno = 0;
                             strcpy(array[i].nombre,nombre);
@@ -178,12 +154,6 @@ int cliente_modificacion(Cliente* array,int limite, int id)
                         }
                     }
                 }
-                else
-                {
-                    retorno = -3;
-                }
-                retorno = 0;
-                break;
 
             }
         }
@@ -191,38 +161,13 @@ int cliente_modificacion(Cliente* array,int limite, int id)
     return retorno;
 }
 
-int cliente_ordenar(Cliente* array,int limite, int orden)
-{
-    int retorno = -1;
-    int i;
-    int flagSwap;
-    Cliente auxiliarEstructura;
-
-    if(limite > 0 && array != NULL)
-    {
-        do
-        {
-            flagSwap = 0;
-            for(i=0;i<limite-1;i++)
-            {
-                if(!array[i].isEmpty && !array[i+1].isEmpty)
-                {
-                    ///COMPARA CARACTER CON CARACTER SI EL PRIMERO ESTA ANTES EN EL ABC DEVUELVE +
-                    ///IGUALES DEVUELVE 0
-                    if(( strcmp(array[i].nombre, array[i+1].nombre) > 0 && orden) || (strcmp(array[i].nombre,array[i+1].nombre) < 0 && !orden)) //******
-                    {
-                        auxiliarEstructura = array[i];
-                        array[i] = array[i+1];
-                        array[i+1] = auxiliarEstructura;
-                        flagSwap = 1;
-                    }
-                }
-            }
-        }while(flagSwap);
-    }
-    return retorno;
-}
-
+/** \brief BUSCA LUGAR LIBRE DENTRO DEL ARRAY
+ *
+ * \param array Cliente* ARRAY CLIENTE (A TRABAJAR)
+ * \param limite int LIMITE DE ARRAY CLIENTE
+ * \return int RETORNA [I] SI ENCUENTRA LUGAR LIBRE
+ *
+ */
 int buscarLugarLibreCliente(Cliente* array,int limite)
 {
     int retorno = -1;
@@ -242,6 +187,11 @@ int buscarLugarLibreCliente(Cliente* array,int limite)
 }
 
 
+/** \brief PROXIMO ID CLIENTE (ID UNICO)
+ *
+ * \return int RETORNA ID++
+ *
+ */
 int proximoIdCliente()
 {
     static int proximoId = -1;
@@ -249,13 +199,20 @@ int proximoIdCliente()
     return proximoId;
 }
 
+/** \brief FUNCION UTILIZADA PARA COMPARAR ID
+ *
+ * \param array Cliente* ARRAY DE CLIENTE
+ * \param limite int LIMITE ARRAY CLIENTE
+ * \param id int ID A COMPARAR
+ * \return int RETORNA [I] (POSICION EN EL ARRAY) // [1] ERROR!!
+ *
+ */
 int cliente_buscarPorId(Cliente* array,int limite, int id)
 {
-    int retorno = -1;
+    int retorno = 1;
     int i;
     if(limite > 0 && array != NULL)
     {
-        retorno = -2;
         for(i=0;i<limite;i++)
         {
             if(!array[i].isEmpty && array[i].idCliente==id)

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "funciones.h"
+
 /** \brief Verifica que el array de char contenga solo NUMEROS.
  *
  * \param auxCarga char* Array de char a validar.
@@ -68,21 +69,20 @@ int verificacionChar(char *auxCarga, char *mensajeError, int tamanioVector)
     return retorno;
 }
 
-/** \brief Valida NOMBRE.
+/** \brief Valida Array de Char(LETRAS).
  *
  * \param nombre char* Mediante puntero paso array de char.
- * \return int retorno [0] si se cargo el NOMBRE con exito. [1] = ERROR.
+ * \return int retorno [0] si se cargo el ArrayChar con exito. [1] = ERROR.
  *
  */
-
-int getArrayChar(char* nombre, char *mensaje, char *mensajeError)
+int getArrayChar(char* nombre, char *mensaje, char *mensajeError,int limite)
 {
     int retorno=1;
-    char auxString[50];
+    char auxString[limite];
     printf("%s",mensaje);
     fflush(stdin);
-    fgets(auxString, 50, stdin);
-    if(!verificacionChar(auxString,mensajeError,50))
+    fgets(auxString, limite, stdin);
+    if(!verificacionChar(auxString,mensajeError,limite))
     {
             strcpy(nombre, auxString);
             retorno=0;
@@ -90,21 +90,20 @@ int getArrayChar(char* nombre, char *mensaje, char *mensajeError)
     return retorno;
 }
 
-/** \brief Valida CUIT.
+/** \brief Valida Array de char(NUMEROS).
  *
  * \param nombre char* Mediante puntero paso array de char.
- * \return int retorno [0] si se cargo el CUIT con exito. [1] = ERROR.
+ * \return int retorno [0] si se cargo el Array Char con exito. [1] = ERROR.
  *
  */
-
-int getCharNumeros(char* cuit, char *mensaje, char *mensajeError)
+int getCharNumeros(char* cuit, char *mensaje, char *mensajeError, int limite)
 {
     int retorno=1;
-    char auxCuit[50];
+    char auxCuit[limite];
     printf("%s",mensaje);
     fflush(stdin);
-    fgets(auxCuit, 50, stdin);
-    if(!verificacionDigito(auxCuit,mensajeError,50))
+    fgets(auxCuit, limite, stdin);
+    if(!verificacionDigito(auxCuit,mensajeError,limite))
     {
             strcpy(cuit, auxCuit);
             retorno=0;
@@ -112,47 +111,65 @@ int getCharNumeros(char* cuit, char *mensaje, char *mensajeError)
     return retorno;
 }
 
+
+/** \brief Obtiene Cadena Alfanumerica
+ *
+ * \param array char* Mediante puntero pasa texto
+ * \param mensaje char* Instruccion usuario
+ * \param mensajeError char* Muestra error
+ * \return int retorna [0] si se obtuvo cadena, [1] ERROR
+ *
+ */
 int getCadena(char* array, char *mensaje, char *mensajeError)
 {
-    int retorno;
+    int retorno=1;
     char auxArray[64];
     printf("%s",mensaje);
     fflush(stdin);
     fgets(auxArray, 64, stdin);
-    strcpy(array, auxArray);
-    retorno=0;
+
+    if(strlen(auxArray)>0 && auxArray!=NULL)
+    {
+            strcpy(array, auxArray);
+            retorno=0;
+    }
+    else
+    {
+        printf("%s",mensajeError);
+    }
+
     return retorno;
 }
 
-/** \brief Valida EDAD.
+/** \brief Valida NUMERO.
  *
- * \param numMax int Defino edad maxima.
- * \param numMin int Defino edad minima.
- * \param edad int* Mediante puntero paso edad.
- * \return int retorno [0] si se cargo la EDAD con exito. [1] = ERROR.
+ * \param numMax int Defino NUMERO maximo.
+ * \param numMin int Defino NUMERO minima.
+ * \param numero int* Mediante puntero paso NUMERO.
+ * \return int retorno [0] si se cargo la NUMERO con exito. [1] = ERROR.
  *
  */
 int getNumero(int numMax, int numMin, int *numero,char *mensaje, char *mensajeError){
-    char auxCharEdad[10];
+    char auxCharNum[10];
     int retorno=1;
     int auxNum;
     int verificacion=0;
     printf("%s",mensaje);
     fflush(stdin);
-    fgets(auxCharEdad, 10, stdin);
-    if(!verificacionDigito(auxCharEdad,mensajeError, 10))
+    fgets(auxCharNum, 10, stdin);
+    if(!verificacionDigito(auxCharNum,mensajeError, 10))
     {
-        auxNum = atoi(auxCharEdad);
+        auxNum = atoi(auxCharNum);
 
         while(auxNum > numMax || auxNum < numMin || verificacion==1)
         {
             printf("%s",mensajeError);
             fflush(stdin);
-            fgets(auxCharEdad, 10, stdin);
-            verificacion = verificacionDigito(auxCharEdad,mensajeError, 10);
+            fgets(auxCharNum, 10, stdin);
+            verificacion = verificacionDigito(auxCharNum,mensajeError, 10);
             if(!verificacion)
             {
-                auxNum = atoi(auxCharEdad);
+                auxNum = atoi(auxCharNum);
             }
         }
         *numero = auxNum;
